@@ -1,0 +1,73 @@
+# Containers
+
+## Launching general purpose OS containers:
+
+### Alpine Linux
+
+1. Change directory into any desired mount point and run the container:
+    ```bash
+    cd $DATA_DIR
+    ```
+    ```bash
+    docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname alpine1 --name alpine1 alpine
+    ```
+    >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
+
+2. Exec into the ocntainer using `ash` or `sh`:
+    ```
+    docker exec -it alpine1 sh
+    ```
+
+---
+
+### Arch Linux
+
+1. Change directory into any desired mount point and run the container:
+    ```bash
+    cd $DATA_DIR
+    ```
+    ```bash
+    docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname arch1 --name arch1 archlinux
+    ```
+    >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
+
+2. Exec into the ocntainer using `bash`:
+    ```
+    docker exec -it arch1 bash
+    ```
+
+---
+
+### Oracle Linux
+
+1. Change directory into any desired mount point and run the container:
+    ```bash
+    cd $DATA_DIR
+    ```
+    ```bash
+    docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname oralinux1 --name oralinux1 oraclelinux
+    ```
+    >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
+
+2. Exec into the ocntainer using `bash`:
+    ```
+    docker exec -it oralinux1 bash
+    ```
+
+---
+
+### Ubuntu 18.04
+
+1. Change directory into any desired mount point and run the container:
+    ```bash
+    cd $DATA_DIR
+    ```
+    ```bash
+    docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname ubuntu --name ubuntu1 ubuntu:18.04
+    ```
+    >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
+
+2. Exec into the ocntainer using `bash`:
+    ```
+    docker exec -it ubuntu1 bash
+    ```
