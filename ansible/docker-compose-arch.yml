@@ -1,0 +1,55 @@
+ 
+---
+version: '3.7'
+
+services:
+########################################################################################
+# Arch Linux with SSH configured for Ansible testing
+# https://hub.docker.com/_/archlinux/
+########################################################################################
+
+  archlinux-node1:
+    #image: archlinux #We need to build it and install/configure SSH for Ansible
+    build:
+      context: .
+      dockerfile: Dockerfile-arch-ansible
+    image: etechonomy/archlinux-ansible
+    container_name: arch1
+    hostname: arch1
+    volumes:
+      - ./hosts:/etc/ansible/hosts
+      - ./data:/root/data
+    networks:
+      - ansible
+
+  archlinux-node2:
+    #image: archlinux #We need to build it and install/configure SSH for Ansible
+    build:
+      context: .
+      dockerfile: Dockerfile-arch
+    image: etechonomy/archlinuxssh
+    container_name: arch2
+    hostname: arch2
+    volumes:
+      - ./data/root/data
+    networks:
+      - ansible
+
+  archlinux-node3:
+    #image: archlinux #We need to build it and install/configure SSH for Ansible
+    build:
+      context: .
+      dockerfile: Dockerfile-arch
+    image: etechonomy/archlinuxssh
+    container_name: arch3
+    hostname: arch3
+    volumes:
+      - ./data/root/data
+    networks:
+      - ansible
+
+
+networks:
+  ansible:
+    external:
+      name: ansible
