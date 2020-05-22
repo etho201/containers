@@ -14,15 +14,14 @@ docker exec -it arch1 /bin/bash
 
 Create SSH keys
 ```
-ssh-keygen -t rsa -b 4096 -C "user@email.com"
+ssh-keygen -t ed25519
 ```
 
-Copy them to remote containers
+Run the bootstrap.yml playbook
 ```
-ssh-copy-id -i ~/.ssh/id_rsa.pub arch2
-ssh-copy-id -i ~/.ssh/id_rsa.pub arch3
+ansible-playbook bootstrap.yml -k --extra-vars "remote_user=root"
 ```
-> **NOTE:** Root Password: alarm
+> **NOTE:** SSH Password: alarm
 
 Test Ansible
 ```
