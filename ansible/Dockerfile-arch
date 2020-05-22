@@ -7,8 +7,7 @@ LABEL Erik Thomsen
 RUN	pacman -Syy
 
 # Install openssh
-RUN	pacman -S --noconfirm openssh
-RUN pacman -S --noconfirm python
+RUN	pacman -Sy --noconfirm openssh python
 
 # Generate host keys
 RUN /usr/bin/ssh-keygen -A

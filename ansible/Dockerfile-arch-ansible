@@ -7,7 +7,7 @@ LABEL Erik Thomsen
 RUN	pacman -Syy
 
 # Install openssh
-RUN	pacman -S --noconfirm openssh
+RUN	pacman -Sy --noconfirm openssh
 
 # Generate host keys
 RUN /usr/bin/ssh-keygen -A
@@ -27,5 +27,5 @@ EXPOSE 22
 # Run openssh daemon
 CMD ["/usr/sbin/sshd", "-D"]
 
-# Install Ansible
-RUN	pacman -S --noconfirm ansible
+# Install Ansible & sshpass
+RUN	pacman -Sy --noconfirm ansible sshpass
