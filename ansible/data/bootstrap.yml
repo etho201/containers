@@ -1,0 +1,63 @@
+---
+- hosts: all
+  #hosts: "{{ hosts }}"
+  remote_user: "{{ remote_user }}"
+  # sudo: yes
+  become: yes
+  #vars_files:
+    #- vars/default.yml
+    
+  tasks:
+    #- name: Install Prerequisites
+      #apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
+
+  # Enable sudo access
+    - name: Install sudo package from repo
+      pacman:
+        update_cache: yes
+        name:
+          - sudo
+
+  # Sudo Group Setup
+    - name: Ensure group "wheel" exists
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+
+  # User + Key Setup
+    - name: Create a new regular user with sudo privileges and generate ssh key
+      user:
+        name: admin
+        state: present
+        groups: wheel
+        append: true
+        create_home: true
+        shell: /bin/bash
+        generate_ssh_key: yes
+        password: "msg={{ 'mypassword' | password_hash('sha512') }}" # you can't login (even with an authorized key) without setting a password
+      
+  # Generate an OpenSSH keypair
+    - openssh_keypair:
+        path: /home/admin/.ssh/id_ed25519
+        type: ed25519
+
+    - name: Set authorized key for remote user
+      authorized_key:
+        user: admin
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
+
+    # - name: Disable password authentication for root
+    #   lineinfile:
+    #     path: /etc/ssh/sshd_config
+    #     state: present
+    #     regexp: '^#?PermitRootLogin'
+    #     line: 'PermitRootLogin prohibit-password'
