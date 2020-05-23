@@ -70,8 +70,11 @@
       
   # Generate an OpenSSH keypair
     - openssh_keypair:
-        path: /home/admin/.ssh/id_ed25519 # Investigate since it's generating ed25519 as the root user (not the admin)
+        owner: admin
+        group: admin
+        path: /home/admin/.ssh/id_ed25519
         type: ed25519
+      #become_user: admin
 
     - name: Set authorized key for remote user
       authorized_key:
