@@ -42,7 +42,7 @@
         create_home: true
         shell: /bin/bash
         generate_ssh_key: yes
-        password: "msg={{ 'mypassword' | password_hash('sha512') }}" # you can't login (even with an authorized key) without setting a password
+        password: "msg={{ 'mypassword' | password_hash('sha512', 'mysecretsalt') }}" # you can't login (even with an authorized key) without setting a password
       
   # Generate an OpenSSH keypair
     - openssh_keypair:
