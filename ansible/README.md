@@ -17,6 +17,7 @@ Run the bootstrap.yml playbook
 ansible-playbook bootstrap.yml -k --extra-vars "remote_user=root"
 ```
 > **NOTE:** SSH Password: alarm
+
 > **NOTE:** Need to run this twice because Ansible only evaluates ansible.cfg once at the beginning
 
 Test Ansible
