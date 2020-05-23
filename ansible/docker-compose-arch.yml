@@ -19,6 +19,7 @@ services:
     volumes:
       - ./hosts:/etc/ansible/hosts
       - ./data:/root/data
+    working_dir: /root/data
     networks:
       - ansible
 
