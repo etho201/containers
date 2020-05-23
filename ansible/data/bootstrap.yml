@@ -1,4 +1,30 @@
 ---
+
+- hosts: localhost
+  become: yes
+    
+  tasks:
+
+    - name: Disable SSH key host checking on Ansible host
+      lineinfile:
+        path: /etc/ansible/ansible.cfg
+        state: present
+        regexp: '^#host_key_checking = False'
+        line: 'host_key_checking = False'
+
+    - name: Create .ssh directory if it does not exist
+      file:
+        path: ~/.ssh
+        state: directory
+        mode: '0700'
+
+    - name: Generate an OpenSSH ed25519 keypair for the host
+      openssh_keypair:
+        path: ~/.ssh/id_ed25519
+        type: ed25519
+  
+#-------------------------------------------------------------
+
 - hosts: all
   #hosts: "{{ hosts }}"
   remote_user: "{{ remote_user }}"
@@ -8,8 +34,6 @@
     #- vars/default.yml
     
   tasks:
-    #- name: Install Prerequisites
-      #apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
 
   # Enable sudo access
     - name: Install sudo package from repo
@@ -46,7 +70,7 @@
       
   # Generate an OpenSSH keypair
     - openssh_keypair:
-        path: /home/admin/.ssh/id_ed25519
+        path: /home/admin/.ssh/id_ed25519 # Investigate since it's generating ed25519 as the root user (not the admin)
         type: ed25519
 
     - name: Set authorized key for remote user
