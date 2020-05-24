@@ -54,10 +54,12 @@
       shell: "which zsh"
       register: zsh_path
 
-    - name: Make zsh the default shell for admin and root
+    - name: Make zsh the default shell for the admin user
       user:
         name: admin
         shell: "{{ zsh_path.stdout }}"
+
+    - name: Make zsh the default shell for root
       user:
         name: root
         shell: "{{ zsh_path.stdout }}"
