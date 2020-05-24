@@ -50,8 +50,14 @@
           powerline-daemon -q
           . /usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
 
-    - name: Make zsh the default shell for the admin user
-      shell: "usermod --shell $(which zsh) admin"
+    - name: Get zsh path
+      shell: "which zsh"
+      register: zsh_path
 
-    - name: Make zsh the default shell for root
-      shell: "chsh -s $(which zsh)"
+    - name: Make zsh the default shell for admin and root
+      user:
+        name: admin
+        shell: "{{ zsh_path.stdout }}"
+      user:
+        name: root
+        shell: "{{ zsh_path.stdout }}"
