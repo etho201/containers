@@ -1,0 +1,57 @@
+---
+
+- hosts: all
+  remote_user: admin
+  become: yes
+
+  tasks:
+
+    - name: Install zsh, powerline, and libffi from repo
+      pacman:
+        update_cache: yes
+        name:
+          - which
+          - zsh
+          - python-pip
+          - powerline
+          - libffi # for some reason this doesn't get installed
+
+    - name: Run command to install libffi
+      shell: "yes | pacman -Sy libffi"
+
+    - name: Create .zshrc file for admin
+      file:
+        path: /home/admin/.zshrc
+        state: touch
+        mode: u=rw,g=r,o=r
+        modification_time: preserve
+        access_time: preserve
+
+    - name: Create .zshrc file for root
+      file:
+        path: /root/.zshrc
+        state: touch
+        mode: u=rw,g=r,o=r
+        modification_time: preserve
+        access_time: preserve
+      become_user: root
+
+    - name: Add powerline configuration into .zshrc files
+      blockinfile:
+        dest: /home/admin/.zshrc
+        block: |
+          powerline-daemon -q
+          . /usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+
+    - name: Add powerline configuration into .zshrc files
+      blockinfile:
+        dest: /root/.zshrc
+        block: |
+          powerline-daemon -q
+          . /usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+
+    - name: Make zsh the default shell for the admin user
+      shell: "usermod --shell $(which zsh) admin"
+
+    - name: Make zsh the default shell for root
+      shell: "chsh -s $(which zsh)"
