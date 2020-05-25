@@ -36,19 +36,23 @@
         access_time: preserve
       become_user: root
 
+    - name: Get powerline repository path
+      shell: "pip show powerline-status | grep Location: | grep -o '/[^\"]*'"
+      register: powerline_path
+
     - name: Add powerline configuration into .zshrc files
       blockinfile:
         dest: /home/admin/.zshrc
         block: |
           powerline-daemon -q
-          . /usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+          . {{ powerline_path.stdout }}/powerline/bindings/zsh/powerline.zsh
 
     - name: Add powerline configuration into .zshrc files
       blockinfile:
         dest: /root/.zshrc
         block: |
           powerline-daemon -q
-          . /usr/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh
+          . {{ powerline_path.stdout }}/powerline/bindings/zsh/powerline.zsh
 
     - name: Get zsh path
       shell: "which zsh"
