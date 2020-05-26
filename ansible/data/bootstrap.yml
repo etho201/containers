@@ -26,12 +26,8 @@
 #-------------------------------------------------------------
 
 - hosts: all
-  #hosts: "{{ hosts }}"
   remote_user: "{{ remote_user }}"
-  # sudo: yes
   become: yes
-  #vars_files:
-    #- vars/default.yml
     
   tasks:
 
@@ -57,7 +53,7 @@
         validate: '/usr/sbin/visudo -cf %s'
 
   # User + Key Setup
-    - name: Create a new regular user with sudo privileges and generate ssh key
+    - name: Create a new user (admin) with sudo privileges
       user:
         name: admin
         state: present
@@ -69,7 +65,8 @@
         password: "{{ 'mypassword' | password_hash('sha512', 'mysecretsalt') }}" # you can't login (even with an authorized key) without setting a password
       
   # Generate an OpenSSH keypair
-    - openssh_keypair:
+    - name: Generate a Ed25519 SSH key for the admin user
+      openssh_keypair:
         owner: admin
         group: admin
         path: /home/admin/.ssh/id_ed25519
