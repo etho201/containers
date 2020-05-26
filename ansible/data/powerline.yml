@@ -14,18 +14,43 @@
           - zsh
           - python-pip
           - powerline
+          - git
           - libffi # for some reason this doesn't get installed
 
     - name: Run command to install libffi
-      shell: "yes | pacman -Sy libffi"
+      command: "echo y | pacman -Sy libffi"
 
-    - name: Create .zshrc file for admin
-      file:
+    # - name: Install oh-my-zsh
+    #   shell: "yes | sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
+
+    # - name: Install oh-my-zsh
+    #   shell: "echo y | sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
+    #   become_user: admin
+    
+    # - name: Install oh-my-zsh
+    #   command: "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
+
+    - name: Disable references to zsh themes
+      lineinfile:
+        path: /root/.zshrc
+        state: present
+        regexp: '^ZSH_THEME='
+        line: '# ZSH_THEME='
+
+    - name: Disable references to zsh themes
+      lineinfile:
         path: /home/admin/.zshrc
-        state: touch
-        mode: u=rw,g=r,o=r
-        modification_time: preserve
-        access_time: preserve
+        state: present
+        regexp: '^ZSH_THEME='
+        line: '# ZSH_THEME='
+
+    # - name: Create .zshrc file for admin
+    #   file:
+    #     path: /home/admin/.zshrc
+    #     state: touch
+    #     mode: u=rw,g=r,o=r
+    #     modification_time: preserve
+    #     access_time: preserve
 
     - name: Create .zshrc file for root
       file:
