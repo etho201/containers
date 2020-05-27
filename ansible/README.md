@@ -14,7 +14,7 @@ docker exec -it arch1 /bin/bash
 
 Run the bootstrap.yml playbook
 ```
-ansible-playbook bootstrap.yml -k --extra-vars "remote_user=root"
+ansible-playbook bootstrap.yml -k -u=root
 ```
 > **NOTE:** SSH Password: alarm
 
