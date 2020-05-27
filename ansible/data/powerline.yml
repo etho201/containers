@@ -21,7 +21,7 @@
     - name: Run command to install libffi
       shell: "yes | pacman -Sy libffi"
       args:
-        creates: "/usr/lib/libffi.so"
+        creates: "/usr/lib/libffi.so.7"
   
     - name: Install oh-my-zsh
       shell: 'yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
@@ -37,6 +37,13 @@
         modification_time: preserve
         access_time: preserve
       become_user: root
+
+    - name: Disable references to oh-my-zsh themes
+      lineinfile:
+        path: /home/admin/.zshrc
+        state: present
+        regexp: '^ZSH_THEME='
+        line: '# ZSH_THEME="robbyrussell"'
 
     - name: Get powerline repository path
       shell: "pip show powerline-status | grep Location: | grep -o '/[^\"]*'"
