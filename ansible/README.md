@@ -14,7 +14,7 @@ docker exec -it arch1 /bin/bash
 
 Run the bootstrap.yml playbook
 ```
-ansible-playbook bootstrap.yml -k -u=root
+ansible-playbook bootstrap.yml -u root -k
 ```
 > **NOTE:** SSH Password: alarm
 
