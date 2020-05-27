@@ -22,7 +22,7 @@ ansible-playbook bootstrap.yml -k --extra-vars "remote_user=root"
 
 Test Ansible
 ```
-ansible all -m ping
+ansible all -u admin -m ping
 ```
 
 Clean up:
