@@ -15,6 +15,7 @@
           - python-pip
           - powerline
           - git
+          - diffutils # required for powerline
           - libffi # for some reason this doesn't get installed
 
     - name: Run command to install libffi
