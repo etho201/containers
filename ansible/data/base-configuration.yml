@@ -1,0 +1,73 @@
+---
+
+# https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-automate-initial-server-setup-on-ubuntu-18-04
+# https://dev.to/thbe/from-zero-to-hero-bootstrap-with-ansible-2ohi
+# useradd admin
+# userdel alarm
+
+- hosts: all
+  remote_user: admin
+  become: yes
+  # vars_files:
+  #   - vars/default.yml
+
+  tasks:
+
+    # - name: change hostname to variable
+    #   hostname:
+    #     name: route66
+
+    # - name: add myself to /etc/hosts
+    #   lineinfile:
+    #     dest: /etc/hosts
+    #     regexp: '^127\.0\.0\.1[ \t]+localhost'
+    #     line: '127.0.0.1 localhost webserver'
+    #     state: present
+
+    - name: Install packages from repo
+      pacman:
+        name:
+          - inetutils
+          - wget
+          - git
+          - htop
+          - screen
+          - docker
+          - docker-compose
+          - ntfs-3g
+          - exfat-utils
+        state: present
+
+    # Static IP Notes:
+    # /etc/dhcpcd.conf
+    # Static IP Configuration
+    # interface eth0
+    # static ip_address=192.168.1.15/24
+    # static routers=192.168.1.1
+    # static domain_name_servers=1.1.1.1
+
+    - name: Get the default network interface
+      shell: "ip route show | awk '/^default/{print $5}'"
+      register: network_interface
+
+    - name: Add an Ethernet connection with static IP configuration
+      nmcli:
+        conn_name: my-eth1
+        ifname: "{{ network_interface.stdout }}"
+        type: ethernet
+        ip4: 192.168.1.15/24
+        gw4: 192.168.1.1
+        state: present
+
+    # Mount notes
+    # sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL
+    # sudo blkid
+    # UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /mnt/hdd ext4 defaults,nofail,x-systemd.device-timeout=30,noatime 0 0
+
+    # - name: Mount up device by UUID
+    #   mount:
+    #     path: /mnt/hdd
+    #     src: UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    #     fstype: ext4
+    #     opts: noatime
+    #     state: present
