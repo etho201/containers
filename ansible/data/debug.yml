@@ -1,0 +1,11 @@
+---
+
+    - hosts: all
+      remote_user: admin
+      #gather_facts: false
+      #become: yes
+    
+      tasks:
+        
+        - debug:
+            msg: '{{ ansible_hostname }}'
