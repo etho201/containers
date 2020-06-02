@@ -13,7 +13,7 @@
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
-2. Exec into the ocntainer using `ash` or `sh`:
+2. Exec into the container using `ash` or `sh`:
     ```
     docker exec -it alpine1 sh
     ```
@@ -31,7 +31,7 @@
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
-2. Exec into the ocntainer using `bash`:
+2. Exec into the container using `bash`:
     ```
     docker exec -it arch1 bash
     ```
@@ -49,7 +49,7 @@
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
-2. Exec into the ocntainer using `bash`:
+2. Exec into the container using `bash`:
     ```
     docker exec -it oralinux1 bash
     ```
@@ -67,7 +67,7 @@
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
-2. Exec into the ocntainer using `bash`:
+2. Exec into the container using `bash`:
     ```
     docker exec -it ubuntu1 bash
     ```

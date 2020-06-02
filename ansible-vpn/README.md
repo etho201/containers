@@ -14,7 +14,7 @@ I prefer the traditional Docker method in this case, because once you build the 
     ```
     docker-compose up -d
     ```
-2. Exec into the ocntainer using `ash` or `sh`:
+2. Exec into the container using `ash` or `sh`:
     ```
     docker exec -it vpn1 sh
     ```
