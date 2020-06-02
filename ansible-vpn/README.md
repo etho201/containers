@@ -4,7 +4,9 @@
 
 There are 2 options to get up and running. Docker-compose is simple because it builds and runs the container in one step, but the volume (mounts) location is not as flexible.
 
-Place your *.ovpn files into the build directory before building.
+I prefer the traditional Docker method in this case, because once you build the image, all you need to do is `cd` into whatever directory you want to mount and then run the container.
+
+>**NOTE:** Place your *.ovpn files into the build directory before building.
 
 ## Docker Compose
 
