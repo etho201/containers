@@ -24,7 +24,7 @@ I prefer the traditional Docker method in this case, because once you build the 
 
 1. Build the image with:
     ```
-    docker build --t etechonomy/ansible-vpn .
+    docker build -t etechonomy/ansible-vpn .
     ```
 
 2. Change directory into any desired mount point and run the container:
