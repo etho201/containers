@@ -4,7 +4,7 @@
     services:
     
       vpn:
-        container_name: vpn
+        container_name: vpn1
         hostname: vpn
         build: .
         image: etechonomy/ansible-vpn
@@ -21,4 +21,4 @@
             - /path/to/ansible/playbooks:/root/mount/
         working_dir: /root/
         environment:
-          - 'PS1=\\h:\\w\\$$ '
+          - 'PS1=\\h:\\w\\$$\/ '
