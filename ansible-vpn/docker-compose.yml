@@ -21,4 +21,4 @@
             - /path/to/ansible/playbooks:/root/mount/
         working_dir: /root/
         environment:
-          - 'PS1=\\h:\\w\\$$\/ '
+          - 'PS1=\\h:[\\w\\$$]# '
