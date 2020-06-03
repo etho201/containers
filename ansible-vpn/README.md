@@ -1,6 +1,6 @@
 # Container with Ansible and OpenVPN
 
-### This creates a Docker image complete with OpenVPN and Ansible so you can easily run playbooks on a remote location after connecting to a VPN.
+### This creates a Docker image complete with OpenVPN and Ansible (with pywinrm) so you can easily run playbooks on a remote location after connecting to a VPN.
 
 There are 2 options to get up and running. Docker-compose is simple because it builds and runs the container in one step, but the volume (mounts) location is not as flexible.
 
@@ -36,7 +36,7 @@ I prefer the traditional Docker method in this case, because once you build the 
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
-3. Exec into the ocntainer using `ash` or `sh`:
+3. Exec into the container using `ash` or `sh`:
     ```
     docker exec -it vpn1 sh
     ```
