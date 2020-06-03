@@ -32,7 +32,7 @@ I prefer the traditional Docker method in this case, because once you build the 
     cd $DATA_DIR
     ```
     ```bash
-    docker run --cap-add=NET_ADMIN --device /dev/net/tun:/dev/net/tun --mount type=bind,source=$(pwd),target=/root/mount -w /root -td -e 'PS1=\\h:[\\w\\$$]# ' --hostname vpn1 --name vpn1 etechonomy/ansible-vpn
+    docker run --cap-add=NET_ADMIN --device /dev/net/tun:/dev/net/tun --mount type=bind,source=$(pwd),target=/root/mount -w /root -td -e 'PS1=[\u@\h \W]\$ ' --hostname vpn1 --name vpn1 etechonomy/ansible-vpn
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
