@@ -1,8 +1,7 @@
 # Dockerfile for vsftpd on CentOS
-FROM alpine:latest
-MAINTAINER Erik Thomsen 
+FROM centos:7
 
-RUN apk add which vsftpd net-tools vsftpd-sysvinit
+RUN yum -y update; yum -y install which vsftpd net-tools vsftpd-sysvinit; yum clean all
 
 COPY vusers.txt /etc/vsftpd/
 RUN db_load -T -t hash -f /etc/vsftpd/vusers.txt /etc/vsftpd/vsftpd-virtual-user.db; rm -v /etc/vsftpd/vusers.txt; \ 
