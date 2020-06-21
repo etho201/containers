@@ -2,9 +2,6 @@
 FROM alpine:latest
 MAINTAINER Erik Thomsen 
 
-RUN apk add openvpn curl ansible py-pip
-
-
 RUN apk add which vsftpd net-tools vsftpd-sysvinit
 
 COPY vusers.txt /etc/vsftpd/
