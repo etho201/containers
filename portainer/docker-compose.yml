@@ -1,0 +1,29 @@
+---
+version: '3.7'
+services:
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    environment:
+      - PUID=${PUID} #id=$user (uid)
+      - PGID=${PGID} #id=$user (gid)
+      - TZ=America/New_York
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data
+    ports:
+        - "9000:9000"
+    restart: unless-stopped
+    networks:
+      - backend
+
+volumes:
+  portainer:
+    #external: true
+    name: portainer #docker volume create portainer
+
+networks:
+  backend:
+    #external:
+      name: backend #docker network create backend
