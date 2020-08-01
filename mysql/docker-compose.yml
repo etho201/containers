@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:latest # 8.x
+    container_name: mysql
+    volumes:
+      - ${VOLUME_DIR}/mysql:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: database1
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+networks:
+  backend:
+    #external:
+      name: backend #docker network create backend
