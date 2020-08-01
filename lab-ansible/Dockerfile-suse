@@ -1,0 +1,29 @@
+# OpenSUSE Tumbleweed with SSH (for Ansible testing)
+
+FROM opensuse/tumbleweed:latest
+LABEL Erik Thomsen
+
+# Update the repositories
+# RUN	pacman -Syy
+
+# Install openssh
+# RUN	pacman -Sy --noconfirm openssh python
+RUN zypper install --no-confirm openssh python
+
+# Generate host keys
+RUN /usr/bin/ssh-keygen -A
+
+# Add password to root user
+RUN	echo 'root:alarm' | chpasswd
+
+# Permit root login
+RUN sed -i -e 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+
+# Fix sshd
+RUN sed -i -e 's/^UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+
+# Expose tcp port
+EXPOSE 22
+
+# Run openssh daemon
+CMD ["/usr/sbin/sshd", "-D"]
