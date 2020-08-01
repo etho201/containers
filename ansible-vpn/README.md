@@ -48,5 +48,5 @@ I prefer the traditional Docker method in this case, because once you build the 
 Once inside the container, connect to a VPN by running:
 
 ```
-# openvpn *.ovpn
+# openvpn --config *.ovpn --daemon
 ```
