@@ -1,0 +1,84 @@
+---
+
+- hosts: localhost
+  become: yes
+
+  tasks:
+
+    - name: Install zsh, powerline, and other dependencies
+      zypper:
+        update_cache: yes
+        name:
+          - which
+          - zsh
+          - git # required for oh-my-zsh
+          - curl # required for oh-my-zsh
+          - diffutils # required for powerline
+          - python3-pip # required for powerline
+          - powerline
+  
+    - name: Install oh-my-zsh as root
+      shell: 'yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+      args:
+        creates: "~/.oh-my-zsh"
+
+    - name: Install oh-my-zsh as user
+      shell: 'yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+      args:
+        creates: "~/.oh-my-zsh"
+      become_user: erik
+
+    - name: Create .zshrc file for root
+      file:
+        path: /root/.zshrc
+        state: touch
+        mode: u=rw,g=r,o=r
+        modification_time: preserve
+        access_time: preserve
+      become_user: root
+
+    - name: Disable references to oh-my-zsh themes (root)
+      lineinfile:
+        path: /root/.zshrc
+        state: present
+        regexp: '^ZSH_THEME='
+        line: '# ZSH_THEME="robbyrussell"'
+
+    - name: Disable references to oh-my-zsh themes (user)
+      lineinfile:
+        path: /home/erik/.zshrc
+        state: present
+        regexp: '^ZSH_THEME='
+        line: '# ZSH_THEME="robbyrussell"'
+
+    - name: Get powerline repository path
+      shell: "pip show powerline-status | grep Location: | grep -o '/[^\"]*'"
+      register: powerline_path
+
+    - name: Add powerline configuration into .zshrc files
+      blockinfile:
+        dest: /home/erik/.zshrc
+        block: |
+          powerline-daemon -q
+          . {{ powerline_path.stdout }}/powerline/bindings/zsh/powerline.zsh
+
+    - name: Add powerline configuration into .zshrc files
+      blockinfile:
+        dest: /root/.zshrc
+        block: |
+          powerline-daemon -q
+          . {{ powerline_path.stdout }}/powerline/bindings/zsh/powerline.zsh
+
+    - name: Get zsh path
+      shell: "which zsh"
+      register: zsh_path
+
+    - name: Make zsh the default shell for the user
+      user:
+        name: erik
+        shell: "{{ zsh_path.stdout }}"
+
+    - name: Make zsh the default shell for root
+      user:
+        name: root
+        shell: "{{ zsh_path.stdout }}"
