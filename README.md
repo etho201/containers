@@ -75,3 +75,17 @@
     ```
     docker exec -it opensuse1 bash
     ```
+    
+---
+
+### Centos
+
+1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+    ```bash
+    docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname centos --name centos1 centos:latest
+    ```
+
+2. Exec into the container using `bash`:
+    ```
+    docker exec -it centos1 bash
+    ```
