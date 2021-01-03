@@ -14,7 +14,11 @@
 
 4. Connect to the VPN with:
     ```bash
-    docker run -v $(pwd):/tmp -w /tmp --cap-add=NET_ADMIN --device /dev/net/tun:/dev/net/tun -td --hostname vpn1 --name vpn2 --network host etechonomy/openvpn *.ovpn --auth-user-pass auth.txt
+    docker run --rm -v $(pwd):/tmp -w /tmp --cap-add=NET_ADMIN --device /dev/net/tun:/dev/net/tun -td --hostname vpn1 --name openvpn --network host etechonomy/openvpn *.ovpn --auth-user-pass auth.txt
     ```
 
+5. To kill the VPN connection:
+    ```bash
+    docker kill openvpn
+    ```
 ---
