@@ -8,6 +8,8 @@ I prefer the traditional Docker method in this case, because once you build the 
 
 >**NOTE:** Place your *.ovpn files into the build directory before building.
 
+>**TIP:** For ease of logging in, add an `auth.txt` into the build directory with the OpenVPN username and password on separate lines.
+
 ## :whale2: Docker Compose
 
 1. Modify the volume location in docker-compose.yml, then run:
@@ -16,7 +18,7 @@ I prefer the traditional Docker method in this case, because once you build the 
     ```
 2. Exec into the container using `ash` or `sh`:
     ```
-    docker exec -it vpn1 sh
+    docker exec -it ansible-vpn sh
     ```
 ---
 
@@ -32,7 +34,7 @@ I prefer the traditional Docker method in this case, because once you build the 
     cd $DATA_DIR
     ```
     ```bash
-    docker run --cap-add=NET_ADMIN --device /dev/net/tun:/dev/net/tun --mount type=bind,source=$(pwd),target=/root/mount -w /root -td -e 'PS1=[\u@\h \W]\$ ' --hostname vpn1 --name vpn1 etechonomy/ansible-vpn
+    docker run --cap-add=NET_ADMIN --device /dev/net/tun:/dev/net/tun --mount type=bind,source=$(pwd),target=/tmp/mount -w /tmp -td -e 'PS1=[\u@\h \W]\$ ' --hostname ansible --name ansible-vpn etechonomy/ansible-vpn
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
@@ -47,6 +49,11 @@ I prefer the traditional Docker method in this case, because once you build the 
 
 Once inside the container, connect to a VPN by running:
 
+```bash
+openvpn --config *.ovpn --daemon
 ```
-# openvpn --config *.ovpn --daemon
+
+If you have an `auth.txt` file available, run this instead:
+```bash
+openvpn --config *.ovpn --auth-user-pass auth.txt --daemon
 ```

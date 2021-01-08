@@ -4,8 +4,8 @@
     services:
     
       vpn:
-        container_name: vpn1
-        hostname: vpn
+        container_name: ansible-vpn
+        hostname: ansible
         build: .
         image: etechonomy/ansible-vpn
         cap_add:
@@ -19,6 +19,6 @@
         tty: true
         volumes:
             - /path/to/ansible/playbooks:/root/mount/
-        working_dir: /root/
+        working_dir: /tmp/
         environment:
           - 'PS1=[\u@\h \W]\$ '
