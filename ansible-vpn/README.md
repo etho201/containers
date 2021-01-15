@@ -16,9 +16,9 @@ I prefer the traditional Docker method in this case, because once you build the 
     ```
     docker-compose up -d
     ```
-2. Exec into the container using `ash` or `sh`:
+2. Exec into the container using `bash`:
     ```
-    docker exec -it ansible-vpn sh
+    docker exec -it ansible-vpn bash
     ```
 ---
 
@@ -38,9 +38,9 @@ I prefer the traditional Docker method in this case, because once you build the 
     ```
     >**NOTE:** `$DATA_DIR` is any directory you want to mount from your host machine in order to make it accessible within the container.
 
-3. Exec into the container using `ash` or `sh`:
+3. Exec into the container using `bash`:
     ```
-    docker exec -it vpn1 sh
+    docker exec -it vpn1 bash
     ```
 
 ---
