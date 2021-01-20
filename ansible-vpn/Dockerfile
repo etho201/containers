@@ -9,3 +9,4 @@ RUN	pacman -Sy --noconfirm openvpn curl sshpass ansible python-pip
 RUN pip3 install pywinrm
 COPY *.ovpn /tmp/
 COPY *.txt /tmp/
+COPY .bash_history /root/
