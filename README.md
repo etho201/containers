@@ -14,7 +14,7 @@
 
 ### Alpine Linux
 
-1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+1. Change directory into any desired mount point (see `$DATA_DIR` above) and run the container:
     ```bash
     docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname alpine1 --name alpine1 alpine
     ```
@@ -27,7 +27,7 @@
 
 ### Arch Linux
 
-1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+1. Change directory into any desired mount point (see `$DATA_DIR` above) and run the container:
     ```bash
     docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname arch1 --name arch1 archlinux
     ```
@@ -40,7 +40,7 @@
 
 ### Oracle Linux
 
-1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+1. Change directory into any desired mount point (see `$DATA_DIR` above) and run the container:
     ```bash
     docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname oralinux1 --name oralinux1 oraclelinux
     ```
@@ -66,7 +66,7 @@
 
 ### OpenSUSE
 
-1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+1. Change directory into any desired mount point (see `$DATA_DIR` above) and run the container:
     ```bash
     docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname opensuse --name opensuse1 opensuse/tumbleweed
     ```
@@ -80,7 +80,7 @@
 
 ### Centos
 
-1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+1. Change directory into any desired mount point (see `$DATA_DIR` above) and run the container:
     ```bash
     docker run --mount type=bind,source=$(pwd),target=/root -w /root -td --hostname centos --name centos1 centos:latest
     ```
@@ -94,7 +94,7 @@
 
 ### Docker in Docker
 
-1. Change directory into any desired mount point (see $DATA_DIR above) and run the container:
+1. Change directory into any desired mount point (see `$DATA_DIR` above) and run the container:
     ```bash
     docker run --privileged -e DOCKER_TLS_CERTDIR=/certs --mount type=bind,source=$(pwd),target=/root -w /root --name dind -td docker:dind
     ```
